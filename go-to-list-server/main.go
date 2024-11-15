@@ -1,10 +1,16 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 )
+
+type ApiResponse struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}
 
 func main() {
 	http.HandleFunc("/", handleHomeRoute)
@@ -22,5 +28,8 @@ func handleHomeRoute(resp http.ResponseWriter, req *http.Request) {
 // "/tasks" route
 func handleTasksRoute(resp http.ResponseWriter, req *http.Request) {
 	resp.Header().Add("Content-Type", "application/json")
-	resp.Write([]byte("{\"name\": \"Tasks route\"}"))
+
+	var response = ApiResponse{Code: 0, Message: "Tasks route"}
+
+	json.NewEncoder(resp).Encode(response)
 }
