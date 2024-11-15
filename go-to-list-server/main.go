@@ -21,5 +21,6 @@ func handleHomeRoute(resp http.ResponseWriter, req *http.Request) {
 
 // "/tasks" route
 func handleTasksRoute(resp http.ResponseWriter, req *http.Request) {
-	resp.Write([]byte("Tasks route"))
+	resp.Header().Add("Content-Type", "application/json")
+	resp.Write([]byte("{\"name\": \"Tasks route\"}"))
 }
