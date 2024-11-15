@@ -29,7 +29,14 @@ func handleHomeRoute(resp http.ResponseWriter, req *http.Request) {
 func handleTasksRoute(resp http.ResponseWriter, req *http.Request) {
 	resp.Header().Add("Content-Type", "application/json")
 
-	var response = ApiResponse{Code: 0, Message: "Tasks route"}
+	var response ApiResponse
+	var method = req.Method
+	switch method {
+	case http.MethodGet:
+		response = ApiResponse{Code: 0, Message: "Tasks route"}
+	default:
+		response = ApiResponse{Code: -1, Message: "The requested method is not configured for this resource"}
+	}
 
 	json.NewEncoder(resp).Encode(response)
 }
